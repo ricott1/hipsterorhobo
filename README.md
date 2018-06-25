@@ -1,8 +1,8 @@
 # hipsterorhobo
 Hipster or Hobo?
 
-##Launch
-'''
+## Launch
+
 sudo python server.py
-'''
+
 visit localhost
