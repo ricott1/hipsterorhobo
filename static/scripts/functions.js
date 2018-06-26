@@ -30,7 +30,7 @@ $(document).ready(function(e) {
             success: function(data) // A function to be called if request succeeds
             {
                 $('#loading').hide();
-                ctx.font = '12pt Arial';
+                ctx.font = '7pt Arial';
                 ctx.beginPath();
                 var jsondata = JSON.parse(data);
                 for (var key in jsondata) {
@@ -44,8 +44,8 @@ $(document).ready(function(e) {
                     ctx.rect(x, y, w, h);
                     ctx.stroke();
 
-                    ctx.lineWidth = 2;
-                    ctx.strokeStyle = 'black';
+                    ctx.lineWidth = '1';
+                    ctx.strokeStyle = "rgb(" + (120 + parseInt(0.1 * jsondata[key]['confidence'])) % 256 + "," + (120 + parseInt(Math.max(0, 255 - 2.5 * jsondata[key]['confidence']))) % 256 + ",0)";
                     var idtext = ['Hipster', 'Hobo'][jsondata[key]['id'] - 1];
                     ctx.strokeText(idtext + "  " + parseInt(Math.max(0, 100 - jsondata[key]['confidence'])) + "%", x, y + 5);
                 }
