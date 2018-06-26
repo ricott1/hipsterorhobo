@@ -9,12 +9,10 @@ $(document).ready(function(e) {
     maxHeight = canvas.height; // Max height for the image
     var img = new Image;
     img.onload = function() {
-        ctx.drawImage(img, 5, 5, canvas.width - 10, canvas.height - 10);
+        resize_image(this)
     };
     img.src = 'images/noimage.png';
-    ctx.strokeStyle = 'blue';
-    ctx.lineWidth = '5';
-    ctx.strokeRect(0, 0, canvas.width, canvas.height);
+
     $("#uploadimage").on('submit', (function(e) {
         e.preventDefault();
         $("#message").empty();
@@ -86,20 +84,6 @@ $(document).ready(function(e) {
         img.onload = function() {
             resize_image(this)
         }
-
-        // img.onload = function() {
-        //     var width = this.width; // Current image width
-        //     var height = this.height; // Current image height
-        //     //ratio = Math.min((maxWidth / width), (maxHeight / height));
-        //     if (width > maxWidth)
-        //         ratio = maxWidth / width
-        //     else if (height > maxHeight)
-        //         ratio = maxHeight / height
-        //     console.log(width, maxWidth, height, maxHeight, ratio);
-        //     ctx.clearRect(0, 0, canvas.width, canvas.height);
-        //     ctx.drawImage(img, 0, 0, width * ratio, height * ratio);
-        //     //ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        // };
         img.src = e.target.result;
     };
 

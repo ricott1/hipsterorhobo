@@ -25,12 +25,14 @@ h1 {
     left: 10%;
     width: 50%;
     height: 90%;
-    border: 2px solid gray;
+    border: 2px solid black;
     border-radius: 10px;
+
+    overflow: hidden;
 }
 
 .left label {
-    color: rgba(0, 0, 0, 0.71);
+    color: black;
     margin-left: 60px;
 }
 
@@ -38,17 +40,16 @@ h1 {
 
 #mainCanvas {
     position: relative;
-    top: 0px;
-    left: 0px;
-    width: 100%;
+    padding: 0;
+    margin: auto;
+    display: block;
     height: 66%;
     background-color: #FFFFFF;
-    overflow: hidden;
 }
 
 #selectImage {
     position: relative;
-    top: 0px;
+    top: 10px;
     width: 100%;
     height: 20%;
     background-color: #B22222;
@@ -58,16 +59,16 @@ h1 {
 
 .submit {
     font-size: 16px;
-    background: linear-gradient(#ffbc00 5%, #ffdd7f 100%);
+    background: linear-gradient(#ffbc00 5%, #FFFFFF 100%);
     border: 1px solid #e5a900;
-    color: #4E4D4B;
+    color: black;
     font-weight: bold;
     cursor: pointer;
     width: 60%;
     border-radius: 5px;
     padding: 10px 0;
     outline: none;
-    margin-top: 2%;
+    margin-top: 1%;
     margin-left: 20%;
 }
 
@@ -78,12 +79,13 @@ h1 {
 #file {
     color: red;
     padding: 5px;
-    border: 5px solid #8BF1B0;
-    background-color: #8BF1B0;
+    border: 5px solid #000000;
+    background-color: #FFFFFF;
     margin-top: 2%;
     border-radius: 5px;
     box-shadow: 0 0 15px #626F7E;
     margin-left: 20%;
+    margin-top: 1%;
     width: 60%;
 }
 
@@ -116,7 +118,7 @@ h1 {
 #loading {
     display: none;
     position: absolute;
-    top: 50px;
-    left: 850px;
+    top: 25px;
+    left: 50%;
     font-size: 25px;
 }
