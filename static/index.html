@@ -13,26 +13,18 @@
         <br/>
         <hr>
         <form id="uploadimage" action="" method="post" enctype="multipart/form-data">
-            <div id="image_preview">
+            <!-- <div id="image_preview">
                 <img id="previewing" src="images/noimage.png" />
-            </div>
-            <hr id="line">
+            </div> -->
+            <canvas id="mainCanvas">
+            </canvas>
+           <!--  <hr id="line"> -->
             <div id="selectImage">
-                <label>Select Your Image</label>
                 <br/>
                 <input type="file" name="file" id="file" required />
                 <input type="submit" value="Upload" class="submit" />
             </div>
         </form>
-        
-    </div>
-    <div class="right">
-        <h1>Result</h1>
-        <br/>
-        <hr>
-        
-        <canvas id="myCanvas">
-        </canvas>
     </div>
     <h4 id='loading'>loading..</h4>
     <div id="message"></div>

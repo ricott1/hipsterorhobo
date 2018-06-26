@@ -1,4 +1,17 @@
+var canvas, ctx;
+var ratio;
+
 $(document).ready(function(e) {
+    canvas = document.getElementById("mainCanvas");
+    ctx = canvas.getContext("2d");
+    var img = new Image;
+    img.onload = function() {
+        ctx.drawImage(img, 5, 5, canvas.width - 10, canvas.height - 10);
+    };
+    img.src = 'images/noimage.png';
+    ctx.strokeStyle = 'blue';
+    ctx.lineWidth = '5';
+    ctx.strokeRect(0, 0, canvas.width, canvas.height);
     $("#uploadimage").on('submit', (function(e) {
         e.preventDefault();
         $("#message").empty();
@@ -14,28 +27,16 @@ $(document).ready(function(e) {
             success: function(data) // A function to be called if request succeeds
             {
                 $('#loading').hide();
-                //$('#image_preview').hide();
-                //$("#message").html(JSON.parse(data[0]));
-
-                var canvas = document.getElementById("myCanvas");
-                var ctx = canvas.getContext("2d");
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.font = '20pt Arial';
-                var img = document.getElementById("previewing");
-                var width = $('#previewing').width(); // Current image width
-                var height = $('#previewing').height(); // Current image height
-                ctx.drawImage(img, x=0, y=0, width=width, height=height);
                 ctx.beginPath();
-
                 var jsondata = JSON.parse(data);
                 for (var key in jsondata) {
-                    console.log(jsondata[key], canvas.width / img.width);
-
                     ctx.lineWidth = 5;
-                    var x = parseInt(jsondata[key]['x'] * width / img.width);
-                    var y = jsondata[key]['y'] * width / img.width;
-                    var w = jsondata[key]['w'] * width / img.width;
-                    var h = jsondata[key]['h'] * width / img.width;
+                    var x = jsondata[key]['x'];
+                    var y = jsondata[key]['y'];
+                    var w = jsondata[key]['w'];
+                    var h = jsondata[key]['h'];
+                    console.log(x, y);
                     ctx.strokeStyle = "rgb(" + parseInt(0.1 * jsondata[key]['confidence']) + "," + parseInt(Math.max(0, 255 - 2.5 * jsondata[key]['confidence'])) + ",0)";
                     ctx.rect(x, y, w, h);
                     ctx.stroke();
@@ -43,7 +44,7 @@ $(document).ready(function(e) {
                     ctx.lineWidth = 2;
                     ctx.strokeStyle = 'black';
                     var idtext = ['Hipster', 'Hobo'][jsondata[key]['id'] - 1];
-                    ctx.strokeText(idtext + "  " + parseInt(Math.max(0, 100 - jsondata[key]['confidence'])) + "%", x + 10, y - 10);
+                    ctx.strokeText(idtext + "  " + parseInt(Math.max(0, 100 - jsondata[key]['confidence'])) + "%", x, y+5);
                 }
 
             }
@@ -58,7 +59,12 @@ $(document).ready(function(e) {
             var imagefile = file.type;
             var match = ["image/jpeg", "image/png", "image/jpg"];
             if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]))) {
-                $('#myCanvas #previewing').attr('src', 'noimage.png');
+                var img = new Image;
+                img.onload = function() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0); // Or at whatever offset you like
+                };
+                img.src = 'images/noimage.png';
                 $("#message").html("<p id='error'>Please Select A valid Image File</p>" + "<h4>Note</h4>" + "<span id='error_message'>Only jpeg, jpg and png Images type allowed</span>");
                 return false;
             } else {
@@ -71,20 +77,18 @@ $(document).ready(function(e) {
 
     function imageIsLoaded(e) {
         $("#file").css("color", "green");
-        $('#image_preview').css("display", "block");
-        $('#previewing').attr('src', e.target.result);
-
-        var maxWidth = $('#image_preview').width(); // Max width for the image
-        var maxHeight = $('#image_preview').height(); // Max height for the image
-
-        var width = $('#previewing').width(); // Current image width
-        var height = $('#previewing').height(); // Current image height
-        var ratio = Math.min(maxWidth / width, maxHeight / height); 
-        console.log(width, maxWidth, height, maxHeight, ratio);// Used for aspect ratio
-        $('#previewing').width(parseInt(width * ratio)); // Set new width
-        $('#previewing').css("height", parseInt(height * ratio)); // Scale height based on ratio
-
-
-        console.log(width, maxWidth, height, maxHeight, ratio);
+        var img = new Image;
+        var maxWidth = canvas.width; // Max width for the image
+        var maxHeight = canvas.height; // Max height for the image
+        img.onload = function() {
+            var width = img.width; // Current image width
+            var height = img.height; // Current image height
+            ratio = Math.min((maxWidth / width), (maxHeight / height));
+            console.log(width, maxWidth, height, maxHeight, ratio);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            //ctx.drawImage(img, 0, 0, width * ratio, height * ratio);
+            ctx.drawImage(img, 0, 0,canvas.width, canvas.height);
+        };
+        img.src = e.target.result;
     };
 });
